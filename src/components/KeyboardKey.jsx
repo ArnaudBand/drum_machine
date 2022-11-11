@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 
 const bankOne = [
   {
@@ -114,9 +114,22 @@ const bankTwo = [
   }
 ];
 
-const KeyboardKey = () => {
+const KeyboardKey = ({ play, sound: { id, key, url, keyCode } }) => {
+  const handleKeydown = (event) => {
+    if(event.keyCode === keyCode){
+      play(key, id)
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeydown)
+  })
+
   return (
-    <div>KeyboardKey</div>
+    <button value="test" id={keyCode} className="drum-pad" onClick={() => play(key, id)}>
+      <audio className="clip" id={key} src={url}/>
+      {key}
+      </button>
   )
 }
 
