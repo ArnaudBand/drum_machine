@@ -115,11 +115,23 @@ const bankTwo = [
   }
 ];
 
+const Keyboard = () => {
+  return (
+    bankOne.map((item) => {
+      return(
+        <button>
+          <audio src={item.url} />
+          {item.key}
+        </button>
+      )
+  }))
+};
+
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h3>Hello World!</h3>
+        <Keyboard />
       </header>
     </div>
   );
