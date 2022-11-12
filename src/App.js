@@ -115,24 +115,27 @@ const bankTwo = [
   },
 ];
 
-const Keyboard = () => {
-  return (
-    bankOne.map((item) => {
-      return (
-        <button className="drum-pad">
-          <audio id={item.key} src={item.url} />
-          <track src="captions_en.vtt" kind="captions" srcLang="en" label="english_captions"></track>
-          {item.key}
-        </button>
-      );
-    }));
-};
+/* eslint-disable jsx-a11y/media-has-caption */
+const Keyboard = ({ play }) => (
+  bankOne.map((item) => (
+    <button key={item.id} type="button" className="drum-pad" onClick={() => play(item.key)}>
+      <audio className="clip" id={item.key} src={item.url} />
+      <track src="captions_en.vtt" kind="captions" srcLang="en" label="english_captions" />
+      {item.key}
+    </button>
+  )));
 
 function App() {
+  const play = (key) => {
+    const audio = document.getElementById(key);
+    audio.currentTime = 0;
+    audio.play();
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <Keyboard />
+        <Keyboard play={play} />
       </header>
     </div>
   );
