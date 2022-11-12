@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 const bankOne = [
@@ -137,10 +137,11 @@ const KeyboardKey = ({ play, sound: { id, key, url, keyCode } }) => {
 }
 
 /* eslint-disable jsx-a11y/media-has-caption */
-const Keyboard = ({ play }) => (
-  bankOne.map((sound) => ( <KeyboardKey play={play} sound={sound} /> )));
+const Keyboard = ({ play, sounds }) => (
+  sounds.map((sound) => ( <KeyboardKey play={play} sound={sound} /> )));
 
 function App() {
+  const [sounds, setSounds] = useState(bankOne)
   const play = (key) => {
     const audio = document.getElementById(key);
     audio.currentTime = 0;
@@ -150,7 +151,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Keyboard play={play} />
+        <Keyboard play={play} sounds={sounds} />
       </header>
     </div>
   );
