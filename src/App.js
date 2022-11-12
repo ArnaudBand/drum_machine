@@ -115,14 +115,18 @@ const bankTwo = [
   },
 ];
 
+const KeyboardKey = ({ play, sound: { id, key, url } }) => {
+  return (
+  <button key={id} type="button" className="drum-pad" onClick={() => play(key)}>
+    <audio className="clip" id={key} src={url} />
+    {key}
+  </button>
+  );
+}
+
 /* eslint-disable jsx-a11y/media-has-caption */
 const Keyboard = ({ play }) => (
-  bankOne.map(({ id, key, url }) => (
-    <button key={id} type="button" className="drum-pad" onClick={() => play(key)}>
-      <audio className="clip" id={key} src={url} />
-      {key}
-    </button>
-  )));
+  bankOne.map((sound) => ( <KeyboardKey play={play} sound={sound} /> )));
 
 function App() {
   const play = (key) => {
