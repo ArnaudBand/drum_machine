@@ -117,11 +117,10 @@ const bankTwo = [
 
 /* eslint-disable jsx-a11y/media-has-caption */
 const Keyboard = ({ play }) => (
-  bankOne.map((item) => (
-    <button key={item.id} type="button" className="drum-pad" onClick={() => play(item.key)}>
-      <audio className="clip" id={item.key} src={item.url} />
-      <track src="captions_en.vtt" kind="captions" srcLang="en" label="english_captions" />
-      {item.key}
+  bankOne.map(({ id, key, url }) => (
+    <button key={id} type="button" className="drum-pad" onClick={() => play(key)}>
+      <audio className="clip" id={key} src={url} />
+      {key}
     </button>
   )));
 
