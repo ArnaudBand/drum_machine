@@ -22,7 +22,7 @@ h2 {
 .wrapper {
   width: 100%;
   display: grid;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 10px;
   grid-gap: 15px;
@@ -47,18 +47,6 @@ h2 {
   border-radius: 10px;
   background-color: white;
   transition: all .3s ease-in-out;
-}
-
-@media(min-width: 768px) {
-  .wrapper {
-    width: 600px;
-  }
-}
-
-@media(min-width: 992px) {
-  .wrapper {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 .controle {
