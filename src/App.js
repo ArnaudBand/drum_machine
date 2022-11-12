@@ -117,7 +117,7 @@ const bankTwo = [
 ];
 
 const soundsName = {
-  heartKit: 'heart Kit',
+  heartKit: 'Heart Kit',
   smothPianoKit: 'Smoth Piano Kit',
 };
 
@@ -154,11 +154,15 @@ const Keyboard = ({ play, sounds }) => (
   </div>
   );
 
-  const DrumController = ({ handleChangeGroups }) => (
-    <button onClick={handleChangeGroups}>Change the sound group</button>
+  const DrumController = ({ name, handleChangeGroups }) => (
+    <>
+      <h2 id="display">{name}</h2>
+      <button onClick={handleChangeGroups}>Change the sound group</button>
+    </>
   );
 
 function App() {
+  const [soundName, setSoundName] = useState('');
   const [soundType, setSoundType] = useState('heartKit');
   const [sounds, setSounds] = useState(soundsGroup[soundType])
 
@@ -182,7 +186,7 @@ function App() {
     <div id="drum-machine">
       <header className="wrapper">
         <Keyboard play={play} sounds={sounds} />
-        <DrumController handleChangeGroups={handleChangeGroups} />
+        <DrumController name={soundsName[soundType]} handleChangeGroups={handleChangeGroups} />
       </header>
     </div>
   );
