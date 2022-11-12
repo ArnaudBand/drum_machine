@@ -148,7 +148,11 @@ const KeyboardKey = ({ play, sound: { id, key, url, keyCode } }) => {
 
 /* eslint-disable jsx-a11y/media-has-caption */
 const Keyboard = ({ play, sounds }) => (
-  sounds.map((sound) => ( <KeyboardKey play={play} sound={sound} /> )));
+  <div className='keyboard'>
+    {sounds.map((sound) => ( <KeyboardKey play={play} sound={sound} /> 
+    ))}
+  </div>
+  );
 
   const DrumController = ({ handleChangeGroups }) => (
     <button onClick={handleChangeGroups}>Change the sound group</button>
@@ -175,8 +179,8 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div id="drum-machine">
+      <header className="wrapper">
         <Keyboard play={play} sounds={sounds} />
         <DrumController handleChangeGroups={handleChangeGroups} />
       </header>
