@@ -150,18 +150,35 @@ const KeyboardKey = ({ play, sound: { id, key, url, keyCode } }) => {
 const Keyboard = ({ play, sounds }) => (
   sounds.map((sound) => ( <KeyboardKey play={play} sound={sound} /> )));
 
+  const DrumController = ({ handleChangeGroups }) => (
+    <button onClick={handleChangeGroups}>Change the sound group</button>
+  );
+
 function App() {
-  const [sounds, setSounds] = useState(bankOne)
+  const [soundType, setSoundType] = useState('heartKit');
+  const [sounds, setSounds] = useState(soundsGroup[soundType])
+
   const play = (key) => {
     const audio = document.getElementById(key);
     audio.currentTime = 0;
     audio.play();
   };
 
+  const handleChangeGroups = () => {
+    if(soundType === 'heartKit') {
+      setSoundType('smothPianoKit')
+      setSounds(soundsGroup.smothPianoKit)
+    } else {
+      setSoundType('heartKit')
+      setSounds(soundsGroup.heartKit)
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <Keyboard play={play} sounds={sounds} />
+        <DrumController handleChangeGroups={handleChangeGroups} />
       </header>
     </div>
   );
