@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable */
+import React, { useEffect } from 'react';
 import './App.css';
 
 const bankOne = [
@@ -115,7 +116,18 @@ const bankTwo = [
   },
 ];
 
-const KeyboardKey = ({ play, sound: { id, key, url } }) => {
+const KeyboardKey = ({ play, sound: { id, key, url, keyCode } }) => {
+
+  const handleKeyPress = (e) => {
+    if (e.keyCode === keyCode) {
+      play(key);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+  }, []);
+
   return (
   <button key={id} type="button" className="drum-pad" onClick={() => play(key)}>
     <audio className="clip" id={key} src={url} />
