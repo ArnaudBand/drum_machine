@@ -116,6 +116,16 @@ const bankTwo = [
   },
 ];
 
+const soundsName = {
+  heartKit: 'heart Kit',
+  smothPianoKit: 'Smoth Piano Kit',
+};
+
+const soundsGroup = {
+  heartKit: bankOne,
+  smothPianoKit: bankTwo,
+};
+
 const KeyboardKey = ({ play, sound: { id, key, url, keyCode } }) => {
 
   const handleKeyPress = (e) => {
@@ -134,7 +144,7 @@ const KeyboardKey = ({ play, sound: { id, key, url, keyCode } }) => {
     {key}
   </button>
   );
-}
+};
 
 /* eslint-disable jsx-a11y/media-has-caption */
 const Keyboard = ({ play, sounds }) => (
