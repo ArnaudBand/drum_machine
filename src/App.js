@@ -154,17 +154,30 @@ const Keyboard = ({ play, sounds }) => (
   </div>
   );
 
-  const DrumController = ({ name, handleChangeGroups }) => (
+  const DrumController = ({ name, handleChangeGroups, volume, handleVolume }) => (
     <>
+      <input
+      max="1"
+      min="0"
+      step="0.01"
+      type="range"
+      value={volume}
+      onChange={handleVolume}
+      />
       <h2 id="display">{name}</h2>
       <button onClick={handleChangeGroups}>Change the sound group</button>
     </>
   );
 
 function App() {
+  const [volume, setVolume] = useState(0.5);
   const [soundName, setSoundName] = useState('');
   const [soundType, setSoundType] = useState('heartKit');
   const [sounds, setSounds] = useState(soundsGroup[soundType])
+
+  const handleVolume = (e) => {
+    setVolume(e.target.value);
+  };
 
   const play = (key, sound) => {
     setSoundName(sound);
@@ -174,6 +187,7 @@ function App() {
   };
 
   const handleChangeGroups = () => {
+    setSoundName('');
     if(soundType === 'heartKit') {
       setSoundType('smothPianoKit')
       setSounds(soundsGroup.smothPianoKit)
@@ -183,11 +197,24 @@ function App() {
     }
   };
 
+  const setVolumeToAudio = () => {
+    const audios = sounds.map((sound) => document.getElementById(sound.key));
+    audios.forEach((audio) => {
+      if(audio) {
+        audio.volume = volume;
+      }
+    });
+  };
   return (
     <div id="drum-machine">
       <header className="wrapper">
+        {setVolumeToAudio()}
         <Keyboard play={play} sounds={sounds} />
-        <DrumController name={soundName || soundsName[soundType]} handleChangeGroups={handleChangeGroups} />
+        <DrumController
+        volume={volume}
+        handleVolume={handleVolume}
+        name={soundName || soundsName[soundType]}
+        handleChangeGroups={handleChangeGroups} />
       </header>
     </div>
   );
