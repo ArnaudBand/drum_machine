@@ -130,7 +130,7 @@ const KeyboardKey = ({ play, sound: { id, key, url, keyCode } }) => {
 
   const handleKeyPress = (e) => {
     if (e.keyCode === keyCode) {
-      play(key);
+      play(key, id);
     }
   };
 
@@ -139,7 +139,7 @@ const KeyboardKey = ({ play, sound: { id, key, url, keyCode } }) => {
   }, []);
 
   return (
-  <button key={id} type="button" className="drum-pad" onClick={() => play(key)}>
+  <button key={id} type="button" className="drum-pad" onClick={() => play(key, id)}>
     <audio className="clip" id={key} src={url} />
     {key}
   </button>
@@ -166,7 +166,8 @@ function App() {
   const [soundType, setSoundType] = useState('heartKit');
   const [sounds, setSounds] = useState(soundsGroup[soundType])
 
-  const play = (key) => {
+  const play = (key, sound) => {
+    setSoundName(sound);
     const audio = document.getElementById(key);
     audio.currentTime = 0;
     audio.play();
@@ -186,7 +187,7 @@ function App() {
     <div id="drum-machine">
       <header className="wrapper">
         <Keyboard play={play} sounds={sounds} />
-        <DrumController name={soundsName[soundType]} handleChangeGroups={handleChangeGroups} />
+        <DrumController name={soundName || soundsName[soundType]} handleChangeGroups={handleChangeGroups} />
       </header>
     </div>
   );
