@@ -118,7 +118,7 @@ const bankTwo = [
 
 const soundsName = {
   heartKit: 'Heart Kit',
-  smothPianoKit: 'Smoth Piano Kit',
+  smothPianoKit: 'Smoth Kit',
 };
 
 const soundsGroup = {
@@ -155,7 +155,8 @@ const Keyboard = ({ play, sounds }) => (
   );
 
   const DrumController = ({ name, handleChangeGroups, volume, handleVolume }) => (
-    <>
+    < div className="controller">
+      <h2>Volume</h2>
       <input
       max="1"
       min="0"
@@ -164,9 +165,9 @@ const Keyboard = ({ play, sounds }) => (
       value={volume}
       onChange={handleVolume}
       />
-      <h2 id="display">{name}</h2>
+      <h3 id="display">{name}</h3>
       <button onClick={handleChangeGroups}>Change the sound group</button>
-    </>
+    </div>
   );
 
 function App() {
