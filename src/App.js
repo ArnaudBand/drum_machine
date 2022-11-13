@@ -118,7 +118,7 @@ const bankTwo = [
 
 const soundsName = {
   heartKit: 'Heart Kit',
-  smothPianoKit: 'Smoth Piano Kit',
+  smothPianoKit: 'Smoth Kit',
 };
 
 const soundsGroup = {
@@ -130,7 +130,7 @@ const KeyboardKey = ({ play, sound: { id, key, url, keyCode } }) => {
 
   const handleKeyPress = (e) => {
     if (e.keyCode === keyCode) {
-      play(key);
+      play(key, id);
     }
   };
 
@@ -139,7 +139,7 @@ const KeyboardKey = ({ play, sound: { id, key, url, keyCode } }) => {
   }, []);
 
   return (
-  <button key={id} type="button" className="drum-pad" onClick={() => play(key)}>
+  <button key={id} type="button" className="drum-pad" onClick={() => play(key, id)}>
     <audio className="clip" id={key} src={url} />
     {key}
   </button>
@@ -154,25 +154,41 @@ const Keyboard = ({ play, sounds }) => (
   </div>
   );
 
-  const DrumController = ({ name, handleChangeGroups }) => (
-    <>
-      <h2 id="display">{name}</h2>
+  const DrumController = ({ name, handleChangeGroups, volume, handleVolume }) => (
+    < div className="controller">
+      <h2>Volume</h2>
+      <input
+      max="1"
+      min="0"
+      step="0.01"
+      type="range"
+      value={volume}
+      onChange={handleVolume}
+      />
+      <h3 id="display">{name}</h3>
       <button onClick={handleChangeGroups}>Change the sound group</button>
-    </>
+    </div>
   );
 
 function App() {
+  const [volume, setVolume] = useState(0.5);
   const [soundName, setSoundName] = useState('');
   const [soundType, setSoundType] = useState('heartKit');
   const [sounds, setSounds] = useState(soundsGroup[soundType])
 
-  const play = (key) => {
+  const handleVolume = (e) => {
+    setVolume(e.target.value);
+  };
+
+  const play = (key, sound) => {
+    setSoundName(sound);
     const audio = document.getElementById(key);
     audio.currentTime = 0;
     audio.play();
   };
 
   const handleChangeGroups = () => {
+    setSoundName('');
     if(soundType === 'heartKit') {
       setSoundType('smothPianoKit')
       setSounds(soundsGroup.smothPianoKit)
@@ -182,11 +198,24 @@ function App() {
     }
   };
 
+  const setVolumeToAudio = () => {
+    const audios = sounds.map((sound) => document.getElementById(sound.key));
+    audios.forEach((audio) => {
+      if(audio) {
+        audio.volume = volume;
+      }
+    });
+  };
   return (
     <div id="drum-machine">
       <header className="wrapper">
+        {setVolumeToAudio()}
         <Keyboard play={play} sounds={sounds} />
-        <DrumController name={soundsName[soundType]} handleChangeGroups={handleChangeGroups} />
+        <DrumController
+        volume={volume}
+        handleVolume={handleVolume}
+        name={soundName || soundsName[soundType]}
+        handleChangeGroups={handleChangeGroups} />
       </header>
     </div>
   );
