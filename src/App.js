@@ -154,7 +154,7 @@ const Keyboard = ({ play, sounds }) => (
   </div>
   );
 
-  const DrumController = ({ name, handleChangeGroups, volume, handleVolume }) => (
+const DrumController = ({ name, handleChangeGroups, volume, handleVolume }) => (
     < div className="controller">
       <h2>Volume</h2>
       <input
